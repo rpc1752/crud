@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+/**
+ * Form component for adding and editing tasks
+ *
+ * @param {Object} props
+ * @param {function({ title: string, description: string }): void} props.addTask - Function to add a new task
+ * @param {function(string, { title: string, description: string }): void} props.updateTask - Function to update a task
+ * @param {Object|null} props.taskToEdit - Task being edited or null
+ * @param {function(Object|null): void} props.setTaskToEdit - Function to set the task being edited
+ */
 const TaskForm = ({ addTask, updateTask, taskToEdit, setTaskToEdit }) => {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");

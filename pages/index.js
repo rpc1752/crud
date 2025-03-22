@@ -5,9 +5,21 @@ import TaskList from "../components/TaskList";
 import FilterButtons from "../components/FilterButtons";
 import { motion } from "framer-motion";
 
+/**
+ * @typedef {Object} Task
+ * @property {string} id - Unique identifier for the task
+ * @property {string} title - Task title
+ * @property {string} [description] - Optional task description
+ * @property {boolean} completed - Whether the task is completed
+ * @property {string} createdAt - ISO string representation of creation date
+ */
+
 export default function Home() {
+	/** @type {[Task[], React.Dispatch<React.SetStateAction<Task[]>>]} */
 	const [tasks, setTasks] = useState([]);
+	/** @type {[Task|null, React.Dispatch<React.SetStateAction<Task|null>>]} */
 	const [taskToEdit, setTaskToEdit] = useState(null);
+	/** @type {[string, React.Dispatch<React.SetStateAction<string>>]} */
 	const [filter, setFilter] = useState("all");
 
 	useEffect(() => {
@@ -21,6 +33,10 @@ export default function Home() {
 		localStorage.setItem("tasks", JSON.stringify(tasks));
 	}, [tasks]);
 
+	/**
+	 * Add a new task
+	 * @param {{ title: string, description: string }} task
+	 */
 	const addTask = (task) => {
 		const newTask = {
 			id: Date.now().toString(),
@@ -32,6 +48,10 @@ export default function Home() {
 		setTasks([newTask, ...tasks]);
 	};
 
+	/**
+	 * Delete a task by id
+	 * @param {string} id
+	 */
 	const deleteTask = (id) => {
 		setTasks(tasks.filter((task) => task.id !== id));
 		if (taskToEdit && taskToEdit.id === id) {
@@ -39,6 +59,11 @@ export default function Home() {
 		}
 	};
 
+	/**
+	 * Update an existing task
+	 * @param {string} id
+	 * @param {{ title: string, description: string }} updatedTask
+	 */
 	const updateTask = (id, updatedTask) => {
 		setTasks(
 			tasks.map((task) =>
@@ -53,6 +78,10 @@ export default function Home() {
 		);
 	};
 
+	/**
+	 * Toggle the completed status of a task
+	 * @param {string} id
+	 */
 	const toggleComplete = (id) => {
 		setTasks(
 			tasks.map((task) =>
