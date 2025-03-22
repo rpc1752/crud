@@ -28,4 +28,6 @@ export const userSchema = yup.object({
 		.email("Please enter a valid email address"),
 });
 
-export type UserData = yup.InferType<typeof userSchema>;
+export type UserData = yup.InferType<typeof userSchema> & {
+	_id?: string;
+};
