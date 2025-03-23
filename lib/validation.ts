@@ -20,7 +20,11 @@ export const userSchema = yup.object({
 		.test(
 			"len",
 			"Mobile number must be between 10 and 15 digits",
-			(val) => val && val.toString().length >= 10 && val.toString().length <= 15
+			function(val) {
+				if (!val) return false;
+				const length = val.toString().length;
+				return length >= 10 && length <= 15;
+			}
 		),
 	email: yup
 		.string()

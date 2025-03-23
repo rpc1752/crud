@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
 
+declare global {
+    var mongoose: { conn: any; promise: any } | undefined;
+}
+
 const MONGODB_URI =
 	process.env.MONGODB_URI || "mongodb://localhost:27017/user-crud-app";
 
@@ -14,6 +18,10 @@ if (!cached) {
 }
 
 async function connectDB() {
+	if (!cached) {
+		cached = global.mongoose = { conn: null, promise: null };
+	}
+
 	if (cached.conn) {
 		return cached.conn;
 	}
