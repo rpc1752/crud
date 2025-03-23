@@ -28,6 +28,15 @@ export const userSchema = yup.object({
 		.email("Please enter a valid email address"),
 });
 
-export type UserData = yup.InferType<typeof userSchema> & {
-	_id?: string;
-};
+export interface UserData {
+  _id?: string; // Make _id optional but explicitly defined
+  user: string;
+  interest: string[];
+  age: number;
+  mobile: number;
+  email: string;
+}
+
+export interface UserFormData extends Omit<UserData, '_id'> {
+  _id?: string;
+}
